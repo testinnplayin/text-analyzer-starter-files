@@ -16,6 +16,11 @@ function calcUniq(arr) {
 	return Object.keys(wordFreq).length;
 }
 
+
+function displayData(select, f) {
+	$(select).empty().append("<dd>" + f + "</dd>");
+}
+
 function handleSubmit() {
 	$('button[type="submit"]').click(function(e) {
 		e.preventDefault();
@@ -26,8 +31,15 @@ function handleSubmit() {
 
 		$('main dl').removeClass('hidden');
 
-		$('.js-word-count').empty().append("<dd>" + calcLength(cleanedText) + "</dd>");
-		$('.js-uniq-cnt').empty().append("<dd>" + calcUniq(cleanedText) + "</dd>")
+		var displayObj = {
+			'.js-word-count' : calcLength(cleanedText),
+			'.js-uniq-cnt' : calcUniq(cleanedText)
+		};
+
+		for (var selector in displayObj) {
+			var fnc = displayObj[selector];
+			displayData(selector, fnc);
+		}
 	});
 }
 
